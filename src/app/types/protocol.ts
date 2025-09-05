@@ -11,7 +11,9 @@ export type Category =
   | "Real Time"
   | "Microservices"
   | "APIs"
-  | "Data";
+  | "Data"
+  | "Authentication"
+  | "Messaging";
 
 export type Difficulty = "Beginner" | "Intermediate" | "Advanced";
 
@@ -46,7 +48,7 @@ export type Protocol = {
   resources: {
     title: string;
     url: string;
-    type: "RFC" | "Documentation" | "Tutorial" | "Tool" | "Library" | "Platform" | "Specification";
+    type: "RFC" | "Documentation" | "Tutorial" | "Tool" | "Library" | "Platform" | "Specification" | "Blog" | "Repository";
   }[];
   securityConsiderations?: string[];
   modernAlternatives?: string[];

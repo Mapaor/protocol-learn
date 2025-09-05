@@ -21,6 +21,8 @@ import { TCP } from "./tcp";
 import { TLS } from "./tls";
 import { WEBSOCKETS } from "./websockets";
 import { XML } from "./xml";
+import { GRCP } from "./grcp";
+import { RADOS } from "./rados";
 
 
 
@@ -45,5 +47,7 @@ export const PROTOCOLS: Protocol[] = [
   TCP,
   TLS,
   WEBSOCKETS,
-  XML
+  XML,
+  GRCP,
+  RADOS
 ];
