@@ -30,11 +30,13 @@ interface ProtocolCardProps {
 
 const getIconForProtocol = (protocolId: string) => {
   switch (protocolId) {
+    // Web
     case 'http':
     case 'https':
     case 'ajax':
     case 'xhtml':
       return <Globe className="w-6 h-6" />;
+    // Files
     case 'ftp':
     case 'sftp':
     case 'ftps':
@@ -42,33 +44,45 @@ const getIconForProtocol = (protocolId: string) => {
     case 'json':
     case 'xml':
       return <FileText className="w-6 h-6" />;
+    // Email
     case 'smtp':
     case 'imap':
     case 'pop3':
       return <Mail className="w-6 h-6" />;
+    // Security
     case 'ssh':
     case 'tls':
+    case 'ssl':
+    case 'mtls':
       return <Lock className="w-6 h-6" />;
+    // Network/Infrastructure
     case 'dns':
     case 'dhcp':
-    case 'ipv4':
-    case 'ipv6':
-    case 'icmp':
-    case 'arp':
-    case 'ntp':
-    case 'snmp':
+    case 'rados':
       return <Server className="w-6 h-6" />;
+    // Transport/Real Time
     case 'tcp':
     case 'udp':
     case 'websockets':
     case 'mqtt':
     case 'sse':
+    case 'nats':
       return <Wifi className="w-6 h-6" />;
+    // APIs/Data
     case 'rest':
     case 'graphql':
+    case 'grcp':
     case 'soap':
     case 'wsdl':
       return <Database className="w-6 h-6" />;
+    // Messaging
+    case 'ampq':
+      return <Wifi className="w-6 h-6" />;
+    // Authentication/Management
+    case 'oauth2':
+    case 'spiffe':
+    case 'spire':
+      return <Shield className="w-6 h-6" />;
     default:
       return <Shield className="w-6 h-6" />;
   }
