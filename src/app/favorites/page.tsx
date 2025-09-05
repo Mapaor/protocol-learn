@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link'
 import { ProtocolGrid } from '../components/protocol/ProtocolCard';
 import { useFavorites } from '../hooks/useProtocol';
-import { PROTOCOLS } from '../data/protocols';
+import { PROTOCOLS } from '../data/protocols/_index';
 import { Heart, BookOpen } from 'lucide-react';
 
 export default function FavoritesPage() {
@@ -36,13 +37,13 @@ export default function FavoritesPage() {
             <p className="text-gray-600 mb-8">
               Start exploring protocols and add them to your favorites for quick access.
             </p>
-            <a
+            <Link
               href="/protocols"
               className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             >
               <BookOpen className="w-5 h-5" />
               <span>Browse Protocols</span>
-            </a>
+            </Link>
           </div>
         ) : (
           <>

@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { useProgress } from '../hooks/useProtocol';
-import { PROTOCOLS } from '../data/protocols';
+import { PROTOCOLS } from '../data/protocols/_index';
 import { Category } from '../types/protocol';
 import { 
   Trophy, 

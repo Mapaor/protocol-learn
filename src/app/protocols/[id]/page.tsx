@@ -115,7 +115,7 @@ export default function ProtocolPage({ params }: ProtocolPageProps) {
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
-                <CheckCircle className={`w-5 h-5 ${completed ? 'fill-current' : ''}`} />
+                <CheckCircle className={`w-5 h-5}`} />
               </button>
             </div>
           </div>
