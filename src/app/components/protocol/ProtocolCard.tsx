@@ -54,6 +54,8 @@ const getIconForProtocol = (protocolId: string) => {
     case 'tls':
     case 'ssl':
     case 'mtls':
+    case 'spiffe':
+    case 'spire':
       return <Lock className="w-6 h-6" />;
     // Network/Infrastructure
     case 'dns':
@@ -76,12 +78,11 @@ const getIconForProtocol = (protocolId: string) => {
     case 'wsdl':
       return <Database className="w-6 h-6" />;
     // Messaging
+    case 'amqp':
     case 'ampq':
       return <Wifi className="w-6 h-6" />;
     // Authentication/Management
     case 'oauth2':
-    case 'spiffe':
-    case 'spire':
       return <Shield className="w-6 h-6" />;
     default:
       return <Shield className="w-6 h-6" />;

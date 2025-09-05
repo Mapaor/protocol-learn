@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { searchProtocols } from '../data/protocols';
 import { Protocol } from '../types/protocol';
+import { PROTOCOLS } from '../data/protocols/_index';
 
 export const useProtocolSearch = () => {
   const [query, setQuery] = useState('');
@@ -119,8 +120,7 @@ export const useProgress = () => {
   };
 
   const getCompletionPercentage = () => {
-    // You can adjust this based on total number of protocols
-    const totalProtocols = 20; // Update this as you add more protocols
+    const totalProtocols = PROTOCOLS.length;
     return Math.round((completedLessons.length / totalProtocols) * 100);
   };
 

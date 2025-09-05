@@ -1,6 +1,6 @@
 import { Protocol } from "../../types/protocol";
 
-export const SPIFFE: Protocol = {
+export const AMQP: Protocol = {
     id: "amqp",
     name: "AMQP",
     category: "Messaging",

@@ -17,7 +17,6 @@ import {
   Mail,
   Lock,
   Database,
-  Layers,
   Server,
   Wifi
 } from 'lucide-react';
@@ -134,21 +133,21 @@ export default function LearnPage() {
     },
     {
       title: "Security Protocols",
-      description: "Understand SSH, TLS, and security fundamentals",
+      description: "Understand SSH, TLS, SSL, mTLS, and security fundamentals",
       protocols: PROTOCOLS.filter(p => p.category === "Security"),
       color: "bg-red-600",
       icon: Lock
     },
     {
       title: "Network Foundations",
-      description: "DNS, DHCP, and core networking protocols",
+      description: "DNS, DHCP, TCP, and core networking protocols",
       protocols: PROTOCOLS.filter(p => p.category === "Network" || p.category === "Transport"),
       color: "bg-indigo-600",
       icon: Server
     },
     {
       title: "APIs & Services",
-      description: "REST, GraphQL, and modern API design",
+      description: "REST, GraphQL, gRPC, and modern API design",
       protocols: PROTOCOLS.filter(p => p.category === "APIs"),
       color: "bg-gray-600",
       icon: Database
@@ -168,14 +167,25 @@ export default function LearnPage() {
       icon: Wifi
     },
     {
-      title: "Advanced Topics",
-      description: "Microservices and complex systems",
-      protocols: PROTOCOLS.filter(p => 
-        p.category === "Microservices" || 
-        p.difficulty === "Advanced"
-      ),
+      title: "Messaging Systems",
+      description: "AMQP, NATS, and message queuing protocols",
+      protocols: PROTOCOLS.filter(p => p.category === "Messaging"),
       color: "bg-orange-600",
-      icon: Layers
+      icon: Mail
+    },
+    {
+      title: "Authentication & Identity",
+      description: "OAuth 2.0, SPIFFE, SPIRE, and identity protocols",
+      protocols: PROTOCOLS.filter(p => p.category === "Authentication"),
+      color: "bg-yellow-600",
+      icon: Lock
+    },
+    {
+      title: "Infrastructure & Cloud",
+      description: "RADOS and distributed system protocols",
+      protocols: PROTOCOLS.filter(p => p.category === "Infrastructure"),
+      color: "bg-slate-600",
+      icon: Server
     }
   ];
 
