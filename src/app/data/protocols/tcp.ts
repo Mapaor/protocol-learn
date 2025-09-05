@@ -61,7 +61,7 @@ Client -> Server: ACK (ack=401)`,
         caption: "TCP three-way handshake and data transmission process"
       }
     ],
-    relatedProtocols: ["ip", "udp", "http"],
+    relatedProtocols: ["ipv4", "udp", "http"],
     resources: [
       {
         title: "RFC 793 - TCP Protocol",

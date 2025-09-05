@@ -1,6 +1,6 @@
 import { Protocol } from "../../types/protocol";
 
-export const GRCP: Protocol = {
+export const GRPC: Protocol = {
     id: "grpc",
     name: "gRPC",
     category: "APIs",
