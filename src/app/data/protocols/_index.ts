@@ -45,67 +45,6 @@ import { OSPF } from "./ospf";
 import { PKCS } from "./pkcs";
 import { POP3 } from "./pop3";
 import { PROTOBUF } from "./protobuf";
-import { RADOS } from "./rados";
-import { RBD } from "./rbd";
-import { REST } from "./rest";
-import { RGW } from "./rgw";
-import { RIP } from "./rip";
-import { RPC } from "./rpc";
-import { RSYNC } from "./rsync";
-import { RTCP } from "./rtcp";
-import { RTP } from "./rtp";
-import { SAML } from "./saml";
-import { SCP } from "./scp";
-import { SCTP } from "./sctp";
-import { SFTP } from "./sftp";
-import { SIP } from "./sip";
-import { SMTP } from "./smtp";
-import { SOAP } from "./soap";
-import { SPDY } from "./spdy";
-import { SPIFFE } from "./spiffe";
-import { SPIRE } from "./spire";
-import { SRTP } from "./srtp";
-import { SSH } from "./ssh";
-import { SSE } from "./sse";
-import { SSL } from "./ssl";
-import { STOMP } from "./stomp";
-import { TCP } from "./tcp";
-import { TLS } from "./tls";
-import { UDP } from "./udp";
-import { QUIC } from "./quic";
-import { WEBSOCKETS } from "./websockets";
-import { WSDL } from "./wsdl";
-import { X509 } from "./x509";
-import { XHTML } from "./xhtml";
-import { XML } from "./xml";
-import { RADOS } from "./rados";
-import { RBD } from "./rbd";
-import { REST } from "./rest";
-import { RGW } from "./rgw";
-import { RPC } from "./rpc";
-import { RSYNC } from "./rsync";
-import { SAML } from "./saml";
-import { SCP } from "./scp";
-import { SCTP } from "./sctp";
-import { SFTP } from "./sftp";
-import { SMTP } from "./smtp";
-import { SOAP } from "./soap";
-import { SPDY } from "./spdy";
-import { SPIFFE } from "./spiffe";
-import { SPIRE } from "./spire";
-import { SRTP } from "./srtp";
-import { SSH } from "./ssh";
-import { SSE } from "./sse";
-import { SSL } from "./ssl";
-import { STOMP } from "./stomp";
-import { TCP } from "./tcp";
-import { TLS } from "./tls";
-import { UDP } from "./udp";
-import { WEBSOCKETS } from "./websockets";
-import { WSDL } from "./wsdl";
-import { X509 } from "./x509";
-import { XHTML } from "./xhtml";
-import { XML } from "./xml";
 
 
 
@@ -154,38 +93,5 @@ export const PROTOCOLS: Protocol[] = [
   OSPF,
   PKCS,
   POP3,
-  PROTOBUF,
-  QUIC,
-  RADOS,
-  RBD,
-  REST,
-  RGW,
-  RIP,
-  RPC,
-  RSYNC,
-  RTCP,
-  RTP,
-  SAML,
-  SCP,
-  SCTP,
-  SFTP,
-  SIP,
-  SMTP,
-  SOAP,
-  SPDY,
-  SPIFFE,
-  SPIRE,
-  SRTP,
-  SSH,
-  SSE,
-  SSL,
-  STOMP,
-  TCP,
-  TLS,
-  UDP,
-  WEBSOCKETS,
-  WSDL,
-  X509,
-  XHTML,
-  XML
+  PROTOBUF
 ];

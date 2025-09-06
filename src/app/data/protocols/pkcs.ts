@@ -5,178 +5,363 @@ export const PKCS: Protocol = {
     name: "PKCS",
     category: "Security",
     difficulty: "Advanced",
-    shortDescription: "Public Key Cryptography Standards for digital signatures and encryption",
-    fullDescription: "PKCS (Public Key Cryptography Standards) is a group of public key cryptography standards devised and published by RSA Security. These standards define data formats, procedures, and protocols for secure digital communications, including certificate requests, digital signatures, and encrypted data storage.",
-    port: "N/A (Standards/Protocols)",
+    shortDescription: "Public Key Cryptography Standards for cryptographic data structures",
+    fullDescription: "PKCS (Public Key Cryptography Standards) are a group of public key cryptography standards devised and published by RSA Security LLC. These standards specify various cryptographic data structures, algorithms, and protocols for secure communications and data protection.",
+    port: "N/A (File formats and standards)",
+    versions: ["PKCS #1", "PKCS #7", "PKCS #8", "PKCS #10", "PKCS #11", "PKCS #12"],
     advantages: [
-      "Industry standard formats",
-      "Interoperability across systems",
-      "Strong cryptographic foundation",
-      "Widely supported",
-      "Comprehensive security coverage",
-      "Flexible implementation"
+      "Standardized cryptography",
+      "Interoperability",
+      "Comprehensive coverage",
+      "Industry adoption",
+      "Security proven algorithms",
+      "Multiple key formats",
+      "Certificate management",
+      "Hardware token support"
     ],
     disadvantages: [
       "Complex implementation",
+      "Version compatibility",
+      "Legacy security issues",
       "Performance overhead",
       "Key management complexity",
-      "Version compatibility issues",
-      "Potential vulnerabilities",
-      "Requires expertise"
+      "Format variations",
+      "Dependency requirements",
+      "Configuration challenges"
     ],
     useCases: [
       "Digital certificates",
-      "SSL/TLS certificates",
       "Code signing",
       "Email encryption",
-      "Document signing",
+      "SSL/TLS certificates",
       "Smart card authentication",
+      "Document signing",
+      "Key storage",
       "Hardware security modules",
-      "Certificate authorities",
-      "Secure key storage",
-      "Two-factor authentication",
-      "Enterprise security",
-      "Financial transactions"
+      "Identity management",
+      "Secure communications",
+      "PKI infrastructure",
+      "Token-based authentication"
     ],
     examples: [
       {
-        title: "Common PKCS Standards",
-        code: `# PKCS #1 - RSA Cryptography Standard
-- RSA encryption and signature schemes
-- Padding schemes (PKCS#1 v1.5, OAEP, PSS)
-- Key format specifications
+        title: "PKCS Standards Overview",
+        code: `# Major PKCS Standards
 
-# PKCS #7 - Cryptographic Message Syntax (CMS)
+PKCS #1: RSA Cryptography Standard
+- RSA public and private key structures
+- RSA signature and encryption schemes
+- OAEP and PSS padding
+
+PKCS #7: Cryptographic Message Syntax (CMS)
+- Digital envelopes
 - Digital signatures
-- Digital envelopes  
-- Signed and encrypted data
-- Certificate chains
+- Certificate transport
+- Encrypted data structures
 
-# PKCS #8 - Private Key Information Syntax
-- Private key storage format
-- Encrypted private keys
+PKCS #8: Private-Key Information Syntax
+- Encrypted and unencrypted private keys
+- Algorithm identifiers
 - Key derivation functions
 
-# PKCS #10 - Certificate Request Syntax (CSR)
-- Certificate signing requests
+PKCS #10: Certification Request Syntax
+- Certificate signing requests (CSR)
 - Subject information
 - Public key information
 
-# PKCS #11 - Cryptographic Token Interface (PKCS#11)
-- Hardware security module interface
-- Smart card API
-- Cryptographic operations
+PKCS #11: Cryptographic Token Interface
+- Hardware security module API
+- Smart card interface
+- Token management functions
 
-# PKCS #12 - Personal Information Exchange Syntax
-- Certificate and private key storage
-- Password-based encryption
-- .p12/.pfx files
-
-# Example PKCS#10 Certificate Request
------BEGIN CERTIFICATE REQUEST-----
-MIICvjCCAaYCAQAwejELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAkNBMRYwFAYDVQQH
-DA1TYW4gRnJhbmNpc2NvMRIwEAYDVQQKDAlNeUNvbXBhbnkxEjAQBgNVBAMMCWxv
-Y2FsaG9zdDEeMBwGCSqGSIb3DQEJARYPdGVzdEBleGFtcGxlLmNvbTCCASIwDQYJ
-KoZIhvcNAQEBBQADggEPADCCAQoCggEBAL...
------END CERTIFICATE REQUEST-----`,
-        explanation: "Overview of major PKCS standards and example certificate request format."
+PKCS #12: Personal Information Exchange Syntax
+- Password-protected key and certificate storage
+- .pfx and .p12 file formats
+- Integrity protection`,
+        explanation: "Overview of major PKCS standards and their purposes."
       },
       {
-        title: "PKCS#11 Usage Example",
-        code: `// PKCS#11 JavaScript example (using node-pkcs11js)
-const pkcs11js = require("pkcs11js");
+        title: "PKCS File Operations",
+        code: `#!/usr/bin/env python3
+from cryptography.hazmat.primitives import serialization, hashes
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives.serialization import pkcs12
+from cryptography import x509
+import base64
 
-// Initialize PKCS#11 library
-const pkcs11 = new pkcs11js.PKCS11();
-pkcs11.load("/usr/lib/softhsm/libsofthsm2.so");
+class PKCSHandler:
+    def __init__(self):
+        self.private_key = None
+        self.certificate = None
+    
+    def generate_rsa_key(self, key_size=2048):
+        """Generate RSA private key (PKCS #1)"""
+        self.private_key = rsa.generate_private_key(
+            public_exponent=65537,
+            key_size=key_size
+        )
+        return self.private_key
+    
+    def export_private_key_pkcs8(self, password=None):
+        """Export private key in PKCS #8 format"""
+        if password:
+            encryption = serialization.BestAvailableEncryption(password.encode())
+        else:
+            encryption = serialization.NoEncryption()
+        
+        return self.private_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=encryption
+        )
+    
+    def load_private_key_pkcs8(self, pem_data, password=None):
+        """Load private key from PKCS #8 format"""
+        self.private_key = serialization.load_pem_private_key(
+            pem_data,
+            password=password.encode() if password else None
+        )
+        return self.private_key
+    
+    def create_csr_pkcs10(self, subject_name):
+        """Create Certificate Signing Request (PKCS #10)"""
+        subject = x509.Name([
+            x509.NameAttribute(x509.NameOID.COUNTRY_NAME, subject_name.get('country', 'US')),
+            x509.NameAttribute(x509.NameOID.STATE_OR_PROVINCE_NAME, subject_name.get('state', 'CA')),
+            x509.NameAttribute(x509.NameOID.LOCALITY_NAME, subject_name.get('city', 'San Francisco')),
+            x509.NameAttribute(x509.NameOID.ORGANIZATION_NAME, subject_name.get('org', 'Example Corp')),
+            x509.NameAttribute(x509.NameOID.COMMON_NAME, subject_name.get('cn', 'example.com')),
+        ])
+        
+        csr = x509.CertificateSigningRequestBuilder().subject_name(
+            subject
+        ).add_extension(
+            x509.SubjectAlternativeName([
+                x509.DNSName(subject_name.get('cn', 'example.com')),
+            ]),
+            critical=False,
+        ).sign(self.private_key, hashes.SHA256())
+        
+        return csr.public_bytes(serialization.Encoding.PEM)
+    
+    def create_pkcs12(self, certificate_pem, password):
+        """Create PKCS #12 bundle (.p12/.pfx)"""
+        cert = x509.load_pem_x509_certificate(certificate_pem)
+        
+        p12_bytes = pkcs12.serialize_key_and_certificates(
+            name=b"My Certificate",
+            key=self.private_key,
+            cert=cert,
+            cas=None,  # Additional CA certificates
+            encryption_algorithm=serialization.BestAvailableEncryption(password.encode())
+        )
+        
+        return p12_bytes
+    
+    def load_pkcs12(self, p12_data, password):
+        """Load PKCS #12 bundle"""
+        private_key, certificate, additional_certs = pkcs12.load_key_and_certificates(
+            p12_data, password.encode()
+        )
+        
+        self.private_key = private_key
+        self.certificate = certificate
+        
+        return {
+            'private_key': private_key,
+            'certificate': certificate,
+            'additional_certs': additional_certs
+        }
 
-try {
-  // Initialize library
-  pkcs11.C_Initialize();
-  
-  // Get slots
-  const slots = pkcs11.C_GetSlotList(true);
-  const slot = slots[0];
-  
-  // Open session
-  const session = pkcs11.C_OpenSession(slot, 
-    pkcs11js.CKF_SERIAL_SESSION | pkcs11js.CKF_RW_SESSION);
-  
-  // Login
-  pkcs11.C_Login(session, pkcs11js.CKU_USER, "1234");
-  
-  // Generate key pair
-  const publicKeyTemplate = [
-    { type: pkcs11js.CKA_CLASS, value: pkcs11js.CKO_PUBLIC_KEY },
-    { type: pkcs11js.CKA_KEY_TYPE, value: pkcs11js.CKK_RSA },
-    { type: pkcs11js.CKA_MODULUS_BITS, value: 2048 },
-    { type: pkcs11js.CKA_PUBLIC_EXPONENT, value: Buffer.from([1, 0, 1]) },
-    { type: pkcs11js.CKA_VERIFY, value: true }
-  ];
-  
-  const privateKeyTemplate = [
-    { type: pkcs11js.CKA_CLASS, value: pkcs11js.CKO_PRIVATE_KEY },
-    { type: pkcs11js.CKA_KEY_TYPE, value: pkcs11js.CKK_RSA },
-    { type: pkcs11js.CKA_SIGN, value: true }
-  ];
-  
-  const keys = pkcs11.C_GenerateKeyPair(session, 
-    { mechanism: pkcs11js.CKM_RSA_PKCS_KEY_PAIR_GEN },
-    publicKeyTemplate, privateKeyTemplate);
-  
-  console.log("Generated key pair:", keys);
-  
-  // Sign data
-  const data = Buffer.from("Hello, PKCS#11!");
-  pkcs11.C_SignInit(session, 
-    { mechanism: pkcs11js.CKM_SHA256_RSA_PKCS }, keys.privateKey);
-  const signature = pkcs11.C_Sign(session, data);
-  
-  console.log("Signature:", signature.toString('hex'));
-  
-} finally {
-  pkcs11.C_Finalize();
-}`,
-        explanation: "PKCS#11 usage for hardware security module operations."
+# Usage examples
+def main():
+    handler = PKCSHandler()
+    
+    # Generate RSA key
+    print("Generating RSA key...")
+    handler.generate_rsa_key(2048)
+    
+    # Export private key (PKCS #8)
+    private_key_pem = handler.export_private_key_pkcs8(password="secret123")
+    print("Private Key (PKCS #8):")
+    print(private_key_pem.decode())
+    
+    # Create CSR (PKCS #10)
+    subject = {
+        'country': 'US',
+        'state': 'California',
+        'city': 'San Francisco',
+        'org': 'Example Corporation',
+        'cn': 'www.example.com'
+    }
+    
+    csr_pem = handler.create_csr_pkcs10(subject)
+    print("\\nCertificate Signing Request (PKCS #10):")
+    print(csr_pem.decode())
+
+# OpenSSL command equivalents:
+# openssl genrsa -out private.key 2048
+# openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in private.key -out private_pkcs8.key
+# openssl req -new -key private.key -out request.csr
+# openssl pkcs12 -export -out certificate.p12 -inkey private.key -in certificate.crt`,
+        explanation: "Python implementation for handling various PKCS formats."
       },
       {
-        title: "OpenSSL PKCS Operations",
-        code: `# Generate private key (PKCS#8 format)
-openssl genpkey -algorithm RSA -out private_key.pem -pkcs8
+        title: "PKCS #11 Token Interface",
+        code: `#!/usr/bin/env python3
+# Example using PyKCS11 library for hardware token access
 
-# Create certificate signing request (PKCS#10)
-openssl req -new -key private_key.pem -out cert_request.csr \\
-  -subj "/C=US/ST=CA/L=San Francisco/O=MyCompany/CN=example.com"
+import PyKCS11
+import binascii
 
-# View CSR details
-openssl req -in cert_request.csr -text -noout
+class PKCS11Manager:
+    def __init__(self, library_path):
+        self.library_path = library_path
+        self.pkcs11 = PyKCS11.PyKCS11Lib()
+        self.session = None
+    
+    def initialize(self):
+        """Initialize PKCS #11 library"""
+        self.pkcs11.load(self.library_path)
+        return True
+    
+    def list_slots(self):
+        """List available token slots"""
+        slots = self.pkcs11.getSlotList(tokenPresent=True)
+        slot_info = []
+        
+        for slot in slots:
+            info = self.pkcs11.getSlotInfo(slot)
+            token_info = self.pkcs11.getTokenInfo(slot)
+            
+            slot_info.append({
+                'slot_id': slot,
+                'description': info.slotDescription.strip(),
+                'token_label': token_info.label.strip(),
+                'manufacturer': token_info.manufacturerID.strip()
+            })
+        
+        return slot_info
+    
+    def open_session(self, slot_id, pin):
+        """Open session with token"""
+        self.session = self.pkcs11.openSession(slot_id, PyKCS11.CKF_SERIAL_SESSION | PyKCS11.CKF_RW_SESSION)
+        self.session.login(pin)
+        return self.session
+    
+    def find_objects(self, template):
+        """Find objects on token"""
+        return self.session.findObjects(template)
+    
+    def list_certificates(self):
+        """List certificates on token"""
+        template = [
+            (PyKCS11.CKA_CLASS, PyKCS11.CKO_CERTIFICATE),
+            (PyKCS11.CKA_CERTIFICATE_TYPE, PyKCS11.CKC_X_509)
+        ]
+        
+        certificates = self.session.findObjects(template)
+        cert_list = []
+        
+        for cert in certificates:
+            attrs = self.session.getAttributeValue(cert, [
+                PyKCS11.CKA_LABEL,
+                PyKCS11.CKA_VALUE,
+                PyKCS11.CKA_SUBJECT
+            ])
+            
+            cert_list.append({
+                'handle': cert,
+                'label': attrs[0],
+                'der_data': bytes(attrs[1]),
+                'subject': bytes(attrs[2])
+            })
+        
+        return cert_list
+    
+    def list_private_keys(self):
+        """List private keys on token"""
+        template = [
+            (PyKCS11.CKA_CLASS, PyKCS11.CKO_PRIVATE_KEY),
+            (PyKCS11.CKA_KEY_TYPE, PyKCS11.CKK_RSA)
+        ]
+        
+        keys = self.session.findObjects(template)
+        key_list = []
+        
+        for key in keys:
+            attrs = self.session.getAttributeValue(key, [
+                PyKCS11.CKA_LABEL,
+                PyKCS11.CKA_ID,
+                PyKCS11.CKA_MODULUS
+            ])
+            
+            key_list.append({
+                'handle': key,
+                'label': attrs[0],
+                'id': binascii.hexlify(bytes(attrs[1])),
+                'modulus_bits': len(attrs[2]) * 8
+            })
+        
+        return key_list
+    
+    def sign_data(self, private_key_handle, data):
+        """Sign data using private key on token"""
+        mechanism = PyKCS11.Mechanism(PyKCS11.CKM_SHA256_RSA_PKCS, None)
+        signature = self.session.sign(private_key_handle, data, mechanism)
+        return bytes(signature)
+    
+    def close_session(self):
+        """Close session and logout"""
+        if self.session:
+            self.session.logout()
+            self.session.closeSession()
 
-# Create PKCS#12 bundle (certificate + private key)
-openssl pkcs12 -export -out certificate.p12 \\
-  -inkey private_key.pem -in certificate.crt \\
-  -certfile ca_chain.crt -name "My Certificate"
-
-# Extract certificate from PKCS#12
-openssl pkcs12 -in certificate.p12 -clcerts -nokeys -out cert.pem
-
-# Extract private key from PKCS#12
-openssl pkcs12 -in certificate.p12 -nocerts -nodes -out key.pem
-
-# Convert PEM to PKCS#8 DER format
-openssl pkcs8 -topk8 -inform PEM -outform DER \\
-  -in private_key.pem -out private_key.der -nocrypt
-
-# Verify PKCS#7 signature
-openssl smime -verify -in signed_message.p7s \\
-  -CAfile ca_certs.pem -out message.txt
-
-# Create PKCS#7 signature
-openssl smime -sign -in message.txt -out signed_message.p7s \\
-  -signer cert.pem -inkey private_key.pem`,
-        explanation: "Common OpenSSL commands for PKCS operations."
+# Usage example (requires hardware token)
+def main():
+    # Common PKCS #11 library paths
+    library_paths = [
+        "/usr/lib/opensc-pkcs11.so",  # OpenSC
+        "/usr/lib/libeTPkcs11.so",    # Gemalto
+        "/usr/lib/libcryptoki.so"     # Generic
+    ]
+    
+    for lib_path in library_paths:
+        try:
+            manager = PKCS11Manager(lib_path)
+            manager.initialize()
+            
+            slots = manager.list_slots()
+            if slots:
+                print(f"Found {len(slots)} token(s)")
+                for slot in slots:
+                    print(f"  Slot {slot['slot_id']}: {slot['token_label']}")
+                
+                # Example: open session with first slot
+                # manager.open_session(slots[0]['slot_id'], "1234")
+                # certs = manager.list_certificates()
+                # keys = manager.list_private_keys()
+                # manager.close_session()
+            
+            break
+        except Exception as e:
+            continue`,
+        explanation: "PKCS #11 interface for hardware security modules and smart cards."
       }
     ],
-    relatedProtocols: ["x509", "ssl", "tls", "mtls", "oauth2", "jwt"],
+    diagrams: [
+      {
+        src: "/pkcs_standards.png",
+        alt: "PKCS standards overview",
+        caption: "PKCS family of cryptographic standards and their relationships"
+      },
+      {
+        src: "/pkcs11_architecture.jpg",
+        alt: "PKCS #11 architecture",
+        caption: "PKCS #11 cryptographic token interface architecture"
+      }
+    ],
+    relatedProtocols: ["x509", "ssl", "tls", "pki"],
     resources: [
       {
         title: "PKCS Standards - RSA Laboratories",
@@ -189,19 +374,19 @@ openssl smime -sign -in message.txt -out signed_message.p7s \\
         type: "RFC"
       },
       {
-        title: "RFC 5652 - CMS (PKCS #7)",
-        url: "https://tools.ietf.org/html/rfc5652",
-        type: "RFC"
+        title: "OASIS PKCS #11 Specifications",
+        url: "https://www.oasis-open.org/committees/pkcs11/",
+        type: "Documentation"
       }
     ],
     securityConsiderations: [
-      "Key management",
-      "Secure key storage",
+      "Secure key generation",
+      "Proper random number generation",
+      "Key storage protection",
+      "Access control mechanisms",
+      "Regular security updates",
+      "Hardware security modules",
       "Certificate validation",
-      "Revocation checking",
-      "Proper padding schemes",
-      "Timing attack prevention",
-      "Random number generation",
-      "Hardware security modules"
+      "Secure communication channels"
     ]
-};
+  }

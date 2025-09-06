@@ -13,7 +13,8 @@ export type Category =
   | "APIs"
   | "Data"
   | "Authentication"
-  | "Messaging";
+  | "Messaging"
+  | "Discovery";
 
 export type Difficulty = "Beginner" | "Intermediate" | "Advanced";
 
@@ -48,7 +49,25 @@ export type Protocol = {
   resources: {
     title: string;
     url: string;
-    type: "RFC" | "Documentation" | "Tutorial" | "Tool" | "Library" | "Platform" | "Specification" | "Blog" | "Repository";
+    type: "RFC" 
+    | "Documentation" 
+    | "Tutorial" 
+    | "Tool" 
+    | "Library" 
+    | "Platform" 
+    | "Specification" 
+    | "Blog" 
+    | "Repository" 
+    | "Guide" 
+    | "Examples" 
+    | "Reference" 
+    | "Product" 
+    | "Community" 
+    | "Service" 
+    | "Standard" 
+    | "API Reference" 
+    | "Organization"
+    | "Whitepaper";
   }[];
   securityConsiderations?: string[];
   modernAlternatives?: string[];
