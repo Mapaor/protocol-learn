@@ -1,1 +1,1 @@
-Una petita demostració que avui en dia crear una aplicació web amb React s'ha tornat ridículament fàcil i ràpid. Aquesta web ha estat feta en 3h totalment amb vibe coding. Una mica preocupant i tot.
+Una petita demostració que avui en dia crear una aplicació web amb React s'ha tornat ridículament fàcil i ràpid. Aquesta web ha estat feta principalment amb vibe coding. Una mica preocupant i tot.

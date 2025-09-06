@@ -1,10 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
+import SmartSearch from '../../components/ui/SmartSearch';
 import { useProgress } from '../../hooks/useProtocol';
 import { 
   ArrowLeft,
@@ -33,14 +34,25 @@ export default function LearningPathLayout({
   gradient
 }: LearningPathLayoutProps) {
   const { isCompleted } = useProgress();
+  const [filteredProtocols, setFilteredProtocols] = useState<Protocol[]>(protocols);
+  
+  // Reset filtered protocols when protocols prop changes
+  React.useEffect(() => {
+    setFilteredProtocols(protocols);
+  }, [protocols]);
+  
   const completedCount = protocols.filter(p => isCompleted(p.id)).length;
   const progressPercentage = Math.round((completedCount / protocols.length) * 100);
 
-  const beginnerProtocols = protocols.filter(p => p.difficulty === "Beginner");
-  const intermediateProtocols = protocols.filter(p => p.difficulty === "Intermediate");
-  const advancedProtocols = protocols.filter(p => p.difficulty === "Advanced");
+  const beginnerProtocols = filteredProtocols.filter(p => p.difficulty === "Beginner");
+  const intermediateProtocols = filteredProtocols.filter(p => p.difficulty === "Intermediate");
+  const advancedProtocols = filteredProtocols.filter(p => p.difficulty === "Advanced");
 
   const nextProtocolToLearn = protocols.find(p => !isCompleted(p.id));
+
+  const handleFilteredResults = (results: Protocol[]) => {
+    setFilteredProtocols(results);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
@@ -140,6 +152,12 @@ export default function LearningPathLayout({
             </CardContent>
           </Card>
         </div>
+
+        {/* Search and Filter */}
+        <SmartSearch 
+          initialProtocols={protocols}
+          onFilteredResults={handleFilteredResults} 
+        />
 
         {/* Protocols by Difficulty */}
         <div className="space-y-8">

@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PROTOCOLS } from '../data/protocols/_index';
-import { Protocol } from '../types/protocol';
-import SmartSearch from '../components/ui/SmartSearch';
-import FilteredProtocolsGrid from '../components/ui/FilteredProtocolsGrid';
+import { PROTOCOLS } from '../../data/protocols/_index';
+import { Protocol } from '../../types/protocol';
+import SmartSearch from '../../components/ui/SmartSearch';
+import FilteredProtocolsGrid from '../../components/ui/FilteredProtocolsGrid';
 
-export default function ProtocolsPage() {
+export default function ProtocolsWithSearch() {
   const [filteredProtocols, setFilteredProtocols] = useState<Protocol[]>(PROTOCOLS);
 
   const handleFilteredResults = (results: Protocol[]) => {
@@ -19,10 +19,10 @@ export default function ProtocolsPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            All Protocols & APIs
+            All Protocols
           </h1>
           <p className="text-xl text-gray-600">
-            Comprehensive guide to network protocols and API technologies
+            Explore and learn about network protocols, APIs, and communication standards
           </p>
         </div>
 
@@ -30,7 +30,9 @@ export default function ProtocolsPage() {
         <SmartSearch onFilteredResults={handleFilteredResults} />
 
         {/* Protocol Grid */}
-        <FilteredProtocolsGrid protocols={filteredProtocols} />
+        <FilteredProtocolsGrid 
+          protocols={filteredProtocols}
+        />
       </div>
     </div>
   );

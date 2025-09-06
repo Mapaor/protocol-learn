@@ -4,7 +4,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { SearchBar } from './components/ui/SearchBar';
-import { ProtocolGrid } from './components/protocol/ProtocolCard';
 import { CategoryFilter } from './components/filters/CategoryFilter';
 import { useProtocolSearch, useProgress } from './hooks/useProtocol';
 import { 
@@ -97,6 +96,15 @@ export default function Home() {
                 <BookOpen className="w-5 h-5" />
                 <span>Browse Protocols</span>
               </Link>
+              <Link
+                href="/search"
+                className="inline-flex items-center space-x-2 border border-blue-300 text-blue-700 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <span>Advanced Search</span>
+              </Link>
             </motion.div>
           </div>
 
@@ -156,22 +164,117 @@ export default function Home() {
             />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <div className="lg:col-span-1">
-              <CategoryFilter
-                selectedCategory={category}
-                onCategoryChange={setCategory}
-              />
-            </div>
-            <div className="lg:col-span-3">
-              <ProtocolGrid protocols={featuredProtocols} showDetails />
-            </div>
+          {/* Category Filter - Horizontal Layout for Better Space Usage */}
+          <div className="mb-8">
+            <CategoryFilter
+              selectedCategory={category}
+              onCategoryChange={setCategory}
+            />
           </div>
 
-          <div className="text-center mt-8">
+          {/* Protocol Cards - Full Width for Better Readability */}
+          <div className="mb-8">
+            {featuredProtocols.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <BookOpen className="w-8 h-8 text-gray-400" />
+                </div>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No protocols found</h3>
+                <p className="text-gray-600">Try adjusting your search or category filter</p>
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    {category === 'All' ? 'Featured Protocols' : `${category} Protocols`}
+                  </h3>
+                  <span className="text-sm text-gray-500">
+                    {featuredProtocols.length} protocol{featuredProtocols.length !== 1 ? 's' : ''}
+                  </span>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                  {featuredProtocols.map((protocol, index) => (
+                    <motion.div
+                      key={protocol.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                    >
+                      <Link href={`/protocols/${protocol.id}`}>
+                        <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100 hover:shadow-lg hover:border-blue-200 transition-all duration-200 group h-full flex flex-col">
+                          {/* Header */}
+                          <div className="flex items-start justify-between mb-3 sm:mb-4">
+                            <div className="flex-1 min-w-0">
+                              <h4 className="text-base sm:text-lg font-semibold text-gray-900 group-hover:text-blue-700 mb-1 sm:mb-2 leading-tight truncate">
+                                {protocol.name}
+                              </h4>
+                              {protocol.versions && protocol.versions.length > 0 && (
+                                <div className="text-xs text-gray-500 mb-2">
+                                  Latest: {protocol.versions[protocol.versions.length - 1]}
+                                </div>
+                              )}
+                            </div>
+                            <div className="ml-3 sm:ml-4 flex-shrink-0">
+                              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-50 rounded-lg flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 group-hover:translate-x-1 transition-transform" />
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Description */}
+                          <div className="flex-1 mb-3 sm:mb-4">
+                            <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                              {protocol.shortDescription}
+                            </p>
+                          </div>
+                          
+                          {/* Footer */}
+                          <div className="space-y-3 mt-auto">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-1 sm:space-x-2 flex-wrap gap-1">
+                                <span className={`inline-flex items-center px-2 sm:px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                  protocol.category === 'Web' ? 'bg-blue-100 text-blue-800' :
+                                  protocol.category === 'Security' ? 'bg-red-100 text-red-800' :
+                                  protocol.category === 'Network' ? 'bg-green-100 text-green-800' :
+                                  protocol.category === 'Transport' ? 'bg-indigo-100 text-indigo-800' :
+                                  protocol.category === 'APIs' ? 'bg-purple-100 text-purple-800' :
+                                  protocol.category === 'Email' ? 'bg-pink-100 text-pink-800' :
+                                  protocol.category === 'Files' ? 'bg-yellow-100 text-yellow-800' :
+                                  'bg-gray-100 text-gray-800'
+                                }`}>
+                                  {protocol.category}
+                                </span>
+                                <span className={`inline-flex items-center px-2 sm:px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                  protocol.difficulty === 'Beginner' ? 'bg-green-100 text-green-800' :
+                                  protocol.difficulty === 'Intermediate' ? 'bg-yellow-100 text-yellow-800' :
+                                  'bg-red-100 text-red-800'
+                                }`}>
+                                  {protocol.difficulty}
+                                </span>
+                              </div>
+                            </div>
+                            
+                            {protocol.port && (
+                              <div className="flex items-center justify-between text-xs text-gray-500 pt-2 border-t border-gray-50">
+                                <span>Default Port</span>
+                                <span className="font-mono font-medium">{protocol.port}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className="text-center">
             <Link
               href="/protocols"
-              className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-semibold"
+              className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             >
               <span>View all protocols</span>
               <ArrowRight className="w-4 h-4" />
