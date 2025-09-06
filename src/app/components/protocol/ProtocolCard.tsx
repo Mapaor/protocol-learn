@@ -139,6 +139,7 @@ const getIconForProtocol = (protocolId: string) => {
     case 'ntp':
     case 'ptp':
     case 'snmp':
+    case 'mcp':
       return <Server className="w-6 h-6" />;
     // Transport & Real Time Communication
     case 'tcp':

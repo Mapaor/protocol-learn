@@ -147,7 +147,7 @@ import { X25 } from "./x25";
 import { X509 } from "./x509";
 import { XHTML } from "./xhtml";
 import { XML } from "./xml";
-
+import { MCP } from './mcp';
 
 
 export const PROTOCOLS: Protocol[] = [
@@ -297,5 +297,6 @@ export const PROTOCOLS: Protocol[] = [
   X25,
   X509,
   XHTML,
-  XML
+  XML,
+  MCP
 ];

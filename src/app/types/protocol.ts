@@ -16,7 +16,8 @@ export type Category =
   | "Messaging"
   | "Discovery"
   | "Multimedia"
-  | "Application";
+  | "Application"
+  | "AI";
 
 export type Difficulty = "Beginner" | "Intermediate" | "Advanced";
 

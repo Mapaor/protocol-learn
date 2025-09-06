@@ -19,6 +19,7 @@ export const CATEGORY_COLORS: Record<Category, string> = {
   Discovery: "bg-blue-100 text-blue-800 border-blue-200",
   Multimedia: "bg-red-100 text-red-800 border-red-200",
   Application: "bg-green-100 text-green-800 border-green-200",
+  AI: "bg-yellow-100 text-yellow-800 border-yellow-200"
 };
 
 export const DIFFICULTY_COLORS: Record<Difficulty, string> = {
@@ -45,7 +46,8 @@ export const CATEGORIES: Category[] = [
   "Messaging",
   "Discovery",
   "Multimedia",
-  "Application"
+  "Application",
+  "AI"
 ];
 
 export const formatPort = (port: string | undefined): string => {
