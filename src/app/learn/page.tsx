@@ -26,82 +26,86 @@ const LearningPath = ({
   description, 
   protocols, 
   color,
-  icon: Icon 
+  icon: Icon,
+  slug
 }: {
   title: string;
   description: string;
   protocols: typeof PROTOCOLS;
   color: string;
   icon: React.ElementType;
+  slug: string;
 }) => {
   const { isCompleted } = useProgress();
   const completedCount = protocols.filter(p => isCompleted(p.id)).length;
   const progressPercentage = Math.round((completedCount / protocols.length) * 100);
 
   return (
-    <Card className="group hover:shadow-lg transition-all duration-300">
-      <CardHeader>
-        <div className="flex items-start justify-between">
-          <div className="flex items-center space-x-3">
-            <div className={`p-3 rounded-lg ${color}`}>
-              <Icon className="w-6 h-6 text-white" />
+    <Link href={`/learn/paths/${slug}`}>
+      <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer">
+        <CardHeader>
+          <div className="flex items-start justify-between">
+            <div className="flex items-center space-x-3">
+              <div className={`p-3 rounded-lg ${color}`}>
+                <Icon className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-700">{title}</h3>
+                <p className="text-gray-600">{description}</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
-              <p className="text-gray-600">{description}</p>
+            <div className="text-right">
+              <div className="text-sm text-gray-500">Progress</div>
+              <div className="text-lg font-semibold text-gray-900">{progressPercentage}%</div>
             </div>
           </div>
-          <div className="text-right">
-            <div className="text-sm text-gray-500">Progress</div>
-            <div className="text-lg font-semibold text-gray-900">{progressPercentage}%</div>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <motion.div
-              className={`h-2 rounded-full ${color.replace('bg-', 'bg-').replace('-600', '-500')}`}
-              initial={{ width: 0 }}
-              animate={{ width: `${progressPercentage}%` }}
-              transition={{ duration: 1, ease: "easeOut" }}
-            />
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {protocols.slice(0, 4).map((protocol) => (
-              <Link
-                key={protocol.id}
-                href={`/protocols/${protocol.id}`}
-                className="p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 group/item"
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="font-medium text-gray-900 group-hover/item:text-blue-700">
-                      {protocol.name}
-                    </h4>
-                    <p className="text-xs text-gray-500">{protocol.difficulty}</p>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <motion.div
+                className={`h-2 rounded-full ${color.replace('bg-', 'bg-').replace('-600', '-500')}`}
+                initial={{ width: 0 }}
+                animate={{ width: `${progressPercentage}%` }}
+                transition={{ duration: 1, ease: "easeOut" }}
+              />
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {protocols.slice(0, 4).map((protocol) => (
+                <div
+                  key={protocol.id}
+                  className="p-3 border border-gray-200 rounded-lg group-hover:border-blue-300 group-hover:bg-blue-50 transition-all duration-200"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-medium text-gray-900 group-hover:text-blue-700">
+                        {protocol.name}
+                      </h4>
+                      <p className="text-xs text-gray-500">{protocol.difficulty}</p>
+                    </div>
+                    {isCompleted(protocol.id) ? (
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                    ) : (
+                      <Play className="w-4 h-4 text-gray-400 group-hover:text-blue-600" />
+                    )}
                   </div>
-                  {isCompleted(protocol.id) ? (
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                  ) : (
-                    <Play className="w-4 h-4 text-gray-400 group-hover/item:text-blue-600" />
-                  )}
                 </div>
-              </Link>
-            ))}
-          </div>
-          
-          {protocols.length > 4 && (
-            <div className="text-center pt-2">
-              <span className="text-sm text-gray-500">
-                +{protocols.length - 4} more protocols
-              </span>
+              ))}
             </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+            
+            {protocols.length > 4 && (
+              <div className="text-center pt-2">
+                <span className="text-sm text-gray-500">
+                  +{protocols.length - 4} more protocols
+                </span>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
   );
 };
 
@@ -115,77 +119,88 @@ export default function LearnPage() {
       description: "Start with HTTP, HTTPS, AJAX, and web protocols",
       protocols: PROTOCOLS.filter(p => p.category === "Web"),
       color: "bg-blue-600",
-      icon: Globe
+      icon: Globe,
+      slug: "web-fundamentals"
     },
     {
       title: "File Transfer",
       description: "Learn FTP, SFTP, SCP, and secure file sharing",
       protocols: PROTOCOLS.filter(p => p.category === "Files"),
       color: "bg-green-600",
-      icon: FileText
+      icon: FileText,
+      slug: "file-transfer"
     },
     {
       title: "Email Systems",
       description: "Master SMTP, IMAP, POP3, and email protocols",
       protocols: PROTOCOLS.filter(p => p.category === "Email"),
       color: "bg-purple-600",
-      icon: Mail
+      icon: Mail,
+      slug: "email-systems"
     },
     {
       title: "Security Protocols",
       description: "Understand SSH, TLS, SSL, mTLS, and security fundamentals",
       protocols: PROTOCOLS.filter(p => p.category === "Security"),
       color: "bg-red-600",
-      icon: Lock
+      icon: Lock,
+      slug: "security-protocols"
     },
     {
       title: "Network Foundations",
       description: "DNS, DHCP, TCP, and core networking protocols",
       protocols: PROTOCOLS.filter(p => p.category === "Network" || p.category === "Transport"),
       color: "bg-indigo-600",
-      icon: Server
+      icon: Server,
+      slug: "network-foundations"
     },
     {
       title: "APIs & Services",
       description: "REST, GraphQL, gRPC, and modern API design",
       protocols: PROTOCOLS.filter(p => p.category === "APIs"),
       color: "bg-gray-600",
-      icon: Database
+      icon: Database,
+      slug: "apis-services"
     },
     {
       title: "Data Formats",
       description: "JSON, XML, and data interchange formats",
       protocols: PROTOCOLS.filter(p => p.category === "Data"),
       color: "bg-teal-600",
-      icon: FileText
+      icon: FileText,
+      slug: "data-formats"
     },
     {
       title: "Real-Time Communication",
       description: "WebSockets, MQTT, and real-time protocols",
       protocols: PROTOCOLS.filter(p => p.category === "Real Time"),
       color: "bg-pink-600",
-      icon: Wifi
+      icon: Wifi,
+      slug: "realtime-communication"
     },
     {
       title: "Messaging Systems",
       description: "AMQP, NATS, and message queuing protocols",
       protocols: PROTOCOLS.filter(p => p.category === "Messaging"),
       color: "bg-orange-600",
-      icon: Mail
+      icon: Mail,
+      slug: "messaging-systems"
     },
     {
       title: "Authentication & Identity",
       description: "OAuth 2.0, SPIFFE, SPIRE, and identity protocols",
       protocols: PROTOCOLS.filter(p => p.category === "Authentication"),
       color: "bg-yellow-600",
-      icon: Lock
+      icon: Lock,
+      slug: "authentication-identity"
     },
     {
       title: "Infrastructure & Cloud",
       description: "RADOS and distributed system protocols",
       protocols: PROTOCOLS.filter(p => p.category === "Infrastructure"),
       color: "bg-slate-600",
-      icon: Server
+      icon: Server,
+      slug: "infrastructure-cloud"
     }
   ];
 

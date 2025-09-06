@@ -33,8 +33,15 @@ const getIconForProtocol = (protocolId: string) => {
     // Web
     case 'http':
     case 'https':
+    case 'http2':
+    case 'http3':
+    case 'httpu':
     case 'ajax':
     case 'xhtml':
+    case 'webdav':
+    case 'webrtc':
+    case 'websockets':
+    case 'static':
       return <Globe className="w-6 h-6" />;
     // Files
     case 'ftp':
@@ -43,47 +50,160 @@ const getIconForProtocol = (protocolId: string) => {
     case 'scp':
     case 'json':
     case 'xml':
+    case 'nfs':
+    case 'cifs':
+    case 'smb':
+    case 'afp':
+    case 'cephfs':
+    case 'glusterfs':
+    case 'lustre':
+    case 'iscsi':
+    case 'nvmeof':
+    case 'rbd':
+    case 'rsync':
       return <FileText className="w-6 h-6" />;
-    // Email
+    // Email & Messaging
     case 'smtp':
     case 'imap':
     case 'pop3':
+    case 'mapi':
+    case 'exchange':
+    case 'ews':
+    case 'caldav':
+    case 'carddav':
+    case 'activesync':
       return <Mail className="w-6 h-6" />;
-    // Security
+    // Security & Authentication
     case 'ssh':
     case 'tls':
     case 'ssl':
     case 'mtls':
     case 'spiffe':
     case 'spire':
+    case 'ipsec':
+    case 'ike':
+    case 'ah':
+    case 'kerberos':
+    case 'ntlm':
+    case 'oauth1':
+    case 'oauth2':
+    case 'openid':
+    case 'saml':
+    case 'pkcs':
+    case 'pki':
+    case 'x509':
+    case 'spnego':
       return <Lock className="w-6 h-6" />;
-    // Network/Infrastructure
+    // Network Infrastructure & Protocols
     case 'dns':
     case 'dhcp':
-    case 'rados':
+    case 'dhcpv6':
+    case 'mdns':
+    case 'dnssd':
+    case 'dnssec':
+    case 'bonjour':
+    case 'upnp':
+    case 'ssdp':
+    case 'wins':
+    case 'netbios':
+    case 'nbt':
+    case 'ncp':
+    case 'ip':
+    case 'ipv4':
+    case 'ipv6':
+    case 'icmp':
+    case 'icmpv6':
+    case 'igmp':
+    case 'mld':
+    case 'ndp':
+    case 'slaac':
+    case 'arp':
+    case 'ethernet':
+    case 'atm':
+    case 'framerelay':
+    case 'x25':
+    case 'ipx':
+    case 'spx':
+    case 'clnp':
+    case 'clns':
+    case 'isis':
+    case 'ospf':
+    case 'eigrp':
+    case 'bgp':
+    case 'rip':
+    case 'pim':
+    case 'mpls':
+    case 'ldp':
+    case 'rsvp':
+    case 'ldap':
+    case 'ntp':
+    case 'ptp':
+    case 'snmp':
       return <Server className="w-6 h-6" />;
-    // Transport/Real Time
+    // Transport & Real Time Communication
     case 'tcp':
     case 'udp':
+    case 'sctp':
+    case 'dccp':
+    case 'quic':
     case 'websockets':
     case 'mqtt':
     case 'sse':
     case 'nats':
-      return <Wifi className="w-6 h-6" />;
-    // APIs/Data
-    case 'rest':
-    case 'graphql':
-    case 'grcp':
-    case 'soap':
-    case 'wsdl':
-      return <Database className="w-6 h-6" />;
-    // Messaging
+    case 'coap':
+    case 'voip':
+    case 'sip':
+    case 'h323':
+    case 'rtsp':
+    case 'rtp':
+    case 'rtcp':
+    case 'srtp':
+    case 'ice':
+    case 'stun':
+    case 'turn':
+    case 'webrtc':
+    case 'stomp':
+    case 'jms':
     case 'amqp':
     case 'ampq':
+    case 'kafka':
+    case 'bittorrent':
+    case 'dht':
+    case 'spdy':
       return <Wifi className="w-6 h-6" />;
-    // Authentication/Management
-    case 'oauth2':
-      return <Shield className="w-6 h-6" />;
+    // APIs & Data Formats
+    case 'rest':
+    case 'graphql':
+    case 'grpc':
+    case 'soap':
+    case 'wsdl':
+    case 'json':
+    case 'xml':
+    case 'avro':
+    case 'protobuf':
+    case 'thrift':
+    case 'jwt':
+    case 'rpc':
+      return <Database className="w-6 h-6" />;
+    // Storage & Distributed Systems
+    case 'rados':
+    case 'rbd':
+    case 'cephfs':
+    case 'glusterfs':
+    case 'lustre':
+    case 'ipfs':
+    case 'rgw':
+    case 'rdma':
+    case 'roce':
+    case 'iwarp':
+    case 'infiniband':
+    case 'fcoe':
+    case 'iscsi':
+    case 'nvmeof':
+    case 'dcb':
+    case 'esp':
+    case 'sdp':
+      return <Database className="w-6 h-6" />;
     default:
       return <Shield className="w-6 h-6" />;
   }

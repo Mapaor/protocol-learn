@@ -14,7 +14,9 @@ export type Category =
   | "Data"
   | "Authentication"
   | "Messaging"
-  | "Discovery";
+  | "Discovery"
+  | "Multimedia"
+  | "Application";
 
 export type Difficulty = "Beginner" | "Intermediate" | "Advanced";
 
@@ -67,7 +69,9 @@ export type Protocol = {
     | "Standard" 
     | "API Reference" 
     | "Organization"
-    | "Whitepaper";
+    | "Whitepaper"
+    | "Implementation"
+    | "Article";
   }[];
   securityConsiderations?: string[];
   modernAlternatives?: string[];
